@@ -1,4 +1,16 @@
 import { useEffect, useState, useMemo } from 'react';
+
+//import { Task } from './Task.jsx';
+
+import {
+	Routes,
+	Route,
+	NavLink,
+	Outlet,
+	useParams,
+	useMatch,
+} from 'react-router-dom';
+
 import styles from './styles.module.css';
 
 import {
@@ -6,6 +18,47 @@ import {
 	useRequestDeleteTodo,
 	useRequestUpdateTodo,
 } from './hooks';
+
+const ExtendedLink = ({ to, children }) => (
+	<NavLink to={to}>
+		{({ isActive }) =>
+			isActive ? (
+				<>
+					<span>{children}</span>
+					<span>*</span>
+				</>
+			) : (
+				<span>{children}</span>
+			)
+		}
+	</NavLink>
+);
+
+const Task = () => {
+	const urlMatchData = useMatch('task/:id');
+
+	const params = useParams();
+
+	console.log('urlMatchData = ', urlMatchData.params.id); //
+
+	console.log('params.id = ', params.id); //
+
+	//const product = fetchProduct(params.id);
+
+	// if (!product) {
+	// 	return <ProductNotFound />;
+	// }
+
+	//const { name, price, amount } = product;
+
+	return (
+		<div>
+			<div>задача {urlMatchData.params.id}</div>
+		</div>
+	);
+
+	return <></>;
+};
 
 export const TodoList = () => {
 	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag);
@@ -171,10 +224,15 @@ export const TodoList = () => {
 			{isLoading ? (
 				<div className={styles.loader}></div>
 			) : (
+				//<NavLink to={`product/${id}`}>{name}</NavLink>
 				processTodoList?.map(({ id, title, completed }) => (
 					<div className={styles.containerTodoList} key={id}>
 						<div className={styles.Todo}>
-							{editingId === id ? (
+							<ExtendedLink to={`Task/${id}`}>
+								{title}
+							</ExtendedLink>
+						</div>
+						{/* {editingId === id ? (
 								<input
 									className={styles.input}
 									name="edit"
@@ -186,8 +244,8 @@ export const TodoList = () => {
 								/>
 							) : (
 								title
-							)}
-							<div className={styles.checkbox}>
+							)} */}
+						{/* <div className={styles.checkbox}>
 								{editingId === id ? (
 									<button
 										disabled={isSave}
@@ -220,8 +278,7 @@ export const TodoList = () => {
 										handleCompleted(id, completed)
 									}
 								/>
-							</div>
-						</div>
+							</div> */}
 					</div>
 				))
 			)}
@@ -235,6 +292,25 @@ export const TodoList = () => {
 			>
 				Сортировка ↓
 			</button>
+			<div className={styles.Todo}>
+				<Outlet />
+			</div>
+
+			<Routes>
+				<Route path="/" element={<TodoList />} />
+				<Route path="task/:id" element={<Task />} />
+
+				{/* <Route path="/404" element={<NotFound />} />
+				<Route path="*" element={<Navigate to="/404" />} />
+				<Route
+					path="/product-loaded-error"
+					element={<ProductLoadError />}
+				/>
+				<Route
+					path="/product-not-exist"
+					element={<ProductNotFound />}
+				/> */}
+			</Routes>
 		</div>
 	);
 };
