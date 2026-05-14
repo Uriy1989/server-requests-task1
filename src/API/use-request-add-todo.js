@@ -14,7 +14,9 @@ export const useRequestAddTodo = (searchPhrase, refreshTodoList) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json;charset=utf-8' },
 			body: JSON.stringify({
+				userId: 1,
 				title: searchPhrase,
+				completed: false,
 			}),
 		})
 			.then((rawResponse) => rawResponse.json())

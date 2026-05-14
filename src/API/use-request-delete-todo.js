@@ -4,6 +4,8 @@ export const useRequestDeleteTodo = (refreshTodoList) => {
 	const [isDelete, setIsDelete] = useState(false);
 
 	const requestDeleteTodo = (id) => {
+		setIsDelete(true);
+
 		fetch(`http://localhost:3003/todoList/${id}`, {
 			method: 'DELETE',
 		})
