@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useRequestUpdateTodo = (refreshTodoList, Task) => {
+export const useRequestUpdateTodo = (refreshTodoList) => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	const requestUpdateTodo = (id, updates = {}) => {

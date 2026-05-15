@@ -4,6 +4,8 @@ import styles from '../styles.module.css';
 
 import { ButtonBack } from '../button/ButtonBack.jsx';
 
+import { Completed } from '../button/Completed.jsx';
+
 import {
 	useRequestDeleteTodo,
 	useRequestUpdateTodo,
@@ -15,6 +17,7 @@ export const Task = () => {
 	const [refreshTodoListFlag, setRefreshTodoListFlag] = useState(false);
 	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag);
 
+	//const { task, handleSetTask } = useTask();
 	const [task, setTask] = useState(null);
 
 	const [isSave, setIsSave] = useState(true);
@@ -43,10 +46,8 @@ export const Task = () => {
 			.finally(() => setIsLoading(false));
 	}, [id, navigate]);
 
-	const { isUpdating, requestUpdateTodo } = useRequestUpdateTodo(
-		refreshTodoList,
-		task,
-	);
+	const { isUpdating, requestUpdateTodo } =
+		useRequestUpdateTodo(refreshTodoList);
 
 	const { isDelete, requestDeleteTodo } =
 		useRequestDeleteTodo(refreshTodoList);
@@ -77,7 +78,10 @@ export const Task = () => {
 
 		try {
 			await requestUpdateTodo(id, { title: editedTitle });
-			setTask((oldTask) => ({ ...oldTask, title: editedTitle }));
+			setTask((oldTask) => ({
+				...oldTask,
+				title: editedTitle,
+			}));
 		} catch (error) {
 			console.error('Ошибка при сохранении:', error);
 		} finally {
@@ -139,7 +143,6 @@ export const Task = () => {
 							Редактировать
 						</button>
 					)}
-
 					<button
 						disabled={isDelete}
 						onClick={() => handleDelete(id)}
@@ -147,17 +150,20 @@ export const Task = () => {
 					>
 						Удалить
 					</button>
-					<input
-						type="checkbox"
-						checked={
-							task ? (
-								task.completed
-							) : (
-								<div className={styles.loader}></div>
-							)
-						}
-						onChange={() => handleCompleted(id, task.completed)}
-					/>
+
+					{
+						<input
+							type="checkbox"
+							checked={
+								task ? (
+									task.completed
+								) : (
+									<div className={styles.loader}></div>
+								)
+							}
+							onChange={() => handleCompleted(id, task.completed)}
+						/>
+					}
 				</div>
 			</div>
 			<ButtonBack />

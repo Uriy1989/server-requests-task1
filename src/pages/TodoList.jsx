@@ -4,12 +4,22 @@ import { Routes, Route, Link, useParams, useMatch } from 'react-router-dom';
 
 import styles from '../styles.module.css';
 
-import { useRequestGetTodo, useRequestAddTodo, requestGetTask } from '../API';
+import {
+	useRequestGetTodo,
+	useRequestAddTodo,
+	useRequestUpdateTodo,
+	requestGetTask,
+} from '../API';
+
+import { Completed } from '../button/Completed.jsx';
 
 export const TodoList = () => {
 	const [refreshTodoListFlag, setRefreshTodoListFlag] = useState(false); //на удаления
 
 	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag); //на удаления
+
+	const { isUpdating, requestUpdateTodo } =
+		useRequestUpdateTodo(refreshTodoList);
 
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [sortByTitle, setSortByTitle] = useState('');
@@ -62,6 +72,10 @@ export const TodoList = () => {
 		setSearchPhrase('');
 	};
 
+	const handleCompleted = (id, currentCompleted) => {
+		requestUpdateTodo(id, { completed: !currentCompleted });
+	};
+
 	return (
 		<div className={styles.app}>
 			<div className={styles.containerTodoList}>
@@ -85,12 +99,19 @@ export const TodoList = () => {
 			{isLoading ? (
 				<div className={styles.loader}></div>
 			) : (
-				processTodoList?.map(({ id, title }) => (
+				processTodoList?.map(({ id, title, completed }) => (
 					<div className={styles.containerTodoList} key={id}>
 						<div className={styles.task}>
 							<Link className={styles.spanText} to={`Task/${id}`}>
 								{title}
 							</Link>
+						</div>
+						<div className={styles.checkbox}>
+							<input
+								type="checkbox"
+								checked={completed}
+								onChange={() => handleCompleted(id, completed)}
+							/>
 						</div>
 					</div>
 				))
