@@ -1,22 +1,19 @@
-import { useState, useMemo } from 'react';
-
-import { Routes, Route, Link, useParams, useMatch } from 'react-router-dom';
-
 import styles from '../styles.module.css';
+import { useState, useMemo } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import {
 	useRequestGetTodo,
 	useRequestAddTodo,
 	useRequestUpdateTodo,
-	requestGetTask,
 } from '../API';
 
 import { Completed } from '../button/Completed.jsx';
 
 export const TodoList = () => {
-	const [refreshTodoListFlag, setRefreshTodoListFlag] = useState(false); //на удаления
+	const [refreshTodoListFlag, setRefreshTodoListFlag] = useState(false);
 
-	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag); //на удаления
+	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag);
 
 	const { isUpdating, requestUpdateTodo } =
 		useRequestUpdateTodo(refreshTodoList);

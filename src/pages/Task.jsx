@@ -1,11 +1,8 @@
-import { useParams, useMatch, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import styles from '../styles.module.css';
 
-import { ButtonBack } from '../button/ButtonBack.jsx';
-
-import { Completed } from '../button/Completed.jsx';
-
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ButtonBack, Completed } from '../button/index.js';
 import {
 	useRequestDeleteTodo,
 	useRequestUpdateTodo,
@@ -17,7 +14,6 @@ export const Task = () => {
 	const [refreshTodoListFlag, setRefreshTodoListFlag] = useState(false);
 	const refreshTodoList = () => setRefreshTodoListFlag(!refreshTodoListFlag);
 
-	//const { task, handleSetTask } = useTask();
 	const [task, setTask] = useState(null);
 
 	const [isSave, setIsSave] = useState(true);

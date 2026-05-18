@@ -101,7 +101,6 @@
 	background-color: var(--disabled-color);
 }
 
-/* Перенос текста для отображения задач (более 92 символов) */
 .todo-text {
 	word-wrap: break-word;
 	word-break: break-all;
@@ -110,7 +109,6 @@
 	max-width: 100%;
 }
 
-/* Стили для текстового поля ввода при редактировании (textarea) */
 .textarea-edit {
 	width: 100%;
 	padding: 8px;
@@ -125,7 +123,6 @@
 	font-size: 16px;
 }
 
-/* Контейнер для задачи с переносом текста */
 .containerTodoList {
 	display: flex;
 	flex-direction: column;
@@ -136,7 +133,6 @@
 	border-radius: 6px;
 }
 
-/* Стиль для содержимого задачи (текст + кнопки) */
 .Todo {
 	display: flex;
 	justify-content: space-between;
@@ -145,7 +141,6 @@
 	width: 100%;
 }
 
-/* Контейнер для чекбокса и кнопок */
 .checkbox {
 	display: flex;
 	align-items: center;
